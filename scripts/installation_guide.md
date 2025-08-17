@@ -32,7 +32,21 @@ Transform your PD Howler artwork with cutting-edge AI:
 
 ## 🛠️ **Installation Steps**
 
-### **Step 1: Install Python Environment**
+### **Step 1: Download the Community Package**
+
+1. **Download from GitHub**: Get the complete package 
+2. **Extract files** to a temporary folder
+3. **Verify files present**:
+   ```
+   pd-howler-ai-bridge/
+   ├── setup_community.bat
+   ├── pd_howler_ai_bridge_template.py
+   ├── 1_Depth_REMBG_PD_template.lua
+   ├── requirements.txt
+   └── README.md
+   ```
+
+### **Step 2: Install Python (if needed)**
 
 1. **Download Python 3.11** from [python.org](https://python.org)
 2. **Important**: Check "Add Python to PATH" during installation
@@ -42,44 +56,50 @@ Transform your PD Howler artwork with cutting-edge AI:
    pip --version
    ```
 
-### **Step 2: Create Project Directory**
+### **Step 3: Run Smart Setup (Recommended)**
 
-Create this exact folder structure:
-```
-B:\TOOLS BY CLAUDE\
-├── Python_bridge\
-│   ├── Python311\          # Portable Python (optional)
-│   ├── Temp\              # Working files
-│   ├── Output\             # Saved results
-│   └── Models\             # Cached AI models
-```
+1. **Open folder** where you extracted the files
+2. **Right-click** on `setup_community.bat`
+3. **Select "Run as administrator"** (recommended)
+4. **Follow the prompts**:
+   - Choose installation path (e.g., `C:\PD_Howler_AI_Bridge`)
+   - Enter your PD Howler Scripts folder path
+   - Confirm configuration
+   - Wait for dependency installation (5-15 minutes)
 
-**Note**: You can change the base path from `B:\TOOLS BY CLAUDE\` to any location, but update all scripts accordingly.
+**The setup will automatically**:
+- Create directory structure
+- Install Python dependencies  
+- Configure scripts with your paths
+- Copy files to correct locations
+- Test the installation
 
-### **Step 3: Install Python Dependencies**
+### **Step 4: Manual Setup (Alternative)**
 
-Open Command Prompt and run:
+If automatic setup fails, you can configure manually:
 
-```bash
-# Core dependencies (required)
-pip install opencv-python numpy pillow
+1. **Create directory structure**:
+   ```
+   C:\PD_Howler_AI_Bridge\
+   ├── Temp\
+   ├── Output\
+   └── Models\
+   ```
 
-# AI dependencies (optional but recommended)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# For GPU support (if you have NVIDIA GPU):
-# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+3. **Configure paths**:
+   - Edit `pd_howler_ai_bridge_template.py`
+   - Replace `{{BRIDGE_PATH_PLACEHOLDER}}` with your path
+   - Edit `1_Depth_REMBG_PD_template.lua`  
+   - Replace `{{BRIDGE_PATH_PLACEHOLDER}}` with your path (use `\\` for Lua)
 
-# Advanced AI models
-pip install transformers
-pip install rembg
-```
-
-### **Step 4: Install PD Howler Bridge Files**
-
-1. **Copy Python script**: Save `pd_howler_ai_bridge.py` to `B:\TOOLS BY CLAUDE\Python_bridge\`
-2. **Copy Lua script**: Save `1_Depth_REMBG_PD.lua` to your PD Howler Scripts folder
-   - Usually: `C:\Program Files\Project Dogwaffle\Scripts\`
+4. **Copy files**:
+   - Copy configured Python script to bridge folder
+   - Copy configured Lua script to PD Howler Scripts folder
 
 ### **Step 5: Test Installation**
 
@@ -183,25 +203,26 @@ B:\TOOLS BY CLAUDE\Python_bridge\
 
 ## 🔄 **Advanced Configuration**
 
-### **Custom Paths**
+### **Custom Paths Configuration**
 
-If you need to use different paths, update these files:
+The smart setup handles this automatically, but for manual configuration:
 
-**In Lua script** (`1_Depth_REMBG_PD.lua`):
-```lua
--- Change this line:
-local export_path = "B:\\TOOLS BY CLAUDE\\Python_bridge\\Temp\\input_frame.txt"
--- To your path:
-local export_path = "C:\\YourPath\\Python_bridge\\Temp\\input_frame.txt"
-```
-
-**In Python script** (`pd_howler_ai_bridge.py`):
+**Python Script Path Format** (use forward slashes):
 ```python
-# Change this line:
-self.temp_dir = Path("B:/TOOLS BY CLAUDE/Python_bridge/Temp")
-# To your path:
-self.temp_dir = Path("C:/YourPath/Python_bridge/Temp")
+# In pd_howler_ai_bridge.py
+BRIDGE_BASE_PATH = "C:/PD_Howler_AI_Bridge"
 ```
+
+**Lua Script Path Format** (use double backslashes):
+```lua
+-- In 1_Depth_REMBG_PD.lua  
+local BRIDGE_PATH = "C:\\PD_Howler_AI_Bridge"
+```
+
+**Why Different Formats?**
+- Python uses forward slashes or escaped backslashes
+- Lua requires double backslashes for Windows paths
+- The setup script handles this automatically
 
 ### **GPU Configuration**
 
